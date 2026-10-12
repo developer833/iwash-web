@@ -1,0 +1,7 @@
+# Netlify's secrets scan fails the build if an env var's value shows up in the build output.
+# These two are identifiers, not credentials, and end up in the output on purpose:
+#   NEXT_PUBLIC_BASE_URL            the ERP's public host (inlined into pages; item photos load from it)
+#   IWASH_RETAIL_CUSTOMER_TYPE_ID   a record id that is part of the price request URL
+# IWASH_API_KEY is deliberately NOT listed: it must stay scanned and must never appear in build output.
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_BASE_URL,IWASH_RETAIL_CUSTOMER_TYPE_ID"
