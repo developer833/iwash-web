@@ -1,26 +1,453 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "@fontsource/plus-jakarta-sans/400.css";
+@import "@fontsource/plus-jakarta-sans/500.css";
+@import "@fontsource/plus-jakarta-sans/600.css";
+@import "@fontsource/plus-jakarta-sans/700.css";
+@import "@fontsource/plus-jakarta-sans/800.css";
+@import "@fontsource-variable/bricolage-grotesque";
+@import "lenis/dist/lenis.css";
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  /* iWash brand palette (unchanged) */
+  --color-iwash-primary: #0284c7;
+  --color-iwash-secondary: #0ea5e9;
+  --color-iwash-tertiary: #bae6fd;
+  --color-iwash-surface: #faf8ff;
+  --color-iwash-surface-dim: #d2d9f4;
+  --color-iwash-neutral: #0f172a;
+  --color-iwash-border: #e0f2fe;
+  --color-iwash-ink-soft: #475569;
+
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #faf8ff;
+  --foreground: #0f172a;
+  --header-h: 4.5rem;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Delay before the hero animates in: after the preloader on a first visit. */
+  --intro-delay: 2.15s;
+}
+
+/* Set by an inline script before first paint when the preloader has already played this session. */
+html[data-seen] {
+  --intro-delay: 0.15s;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-iwash-tertiary);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-iwash-primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---------- Editorial type ---------- */
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.94;
+  text-wrap: balance;
+}
+
+.hero-title {
+  font-size: clamp(2.9rem, 6.5vw, 7.25rem);
+}
+
+.display-xl {
+  font-size: clamp(3rem, 9.4vw, 10rem);
+}
+
+.display-lg {
+  font-size: clamp(2.6rem, 7vw, 7rem);
+}
+
+.display-md {
+  font-size: clamp(2.1rem, 4.8vw, 4.5rem);
+}
+
+.display-sm {
+  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+}
+
+/* Large running statement, set beside a small label. */
+.statement {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 2.7vw, 2.75rem);
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+  text-wrap: pretty;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-iwash-primary);
+}
+
+.lede {
+  font-size: clamp(1rem, 1.25vw, 1.2rem);
+  line-height: 1.55;
+  color: var(--color-iwash-ink-soft);
+  text-wrap: pretty;
+}
+
+/* ---------- Preloader ----------
+   Pure CSS so it can never trap the page: it plays once per session and
+   removes itself even if JavaScript fails to load. */
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: var(--color-iwash-neutral);
+  animation: preloader-out 0.95s var(--ease) 1.75s forwards;
+}
+
+html[data-seen] .preloader {
+  display: none;
+}
+
+.preloader-logo {
+  width: min(52vw, 300px);
+  height: auto;
+  overflow: visible;
+  animation: preloader-logo-out 0.6s var(--ease) 1.55s forwards;
+}
+
+.preloader-stroke {
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: butt;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: preloader-draw 0.62s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.preloader-stroke-1 {
+  animation-delay: 0.2s;
+}
+
+.preloader-stroke-2 {
+  animation-delay: 0.72s;
+}
+
+@keyframes preloader-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes preloader-logo-out {
+  to {
+    opacity: 0;
+    transform: translateY(-14px) scale(0.97);
+  }
+}
+
+@keyframes preloader-out {
+  0% {
+    clip-path: inset(0 0 0 0);
+  }
+  99% {
+    clip-path: inset(0 0 100% 0);
+    visibility: visible;
+  }
+  100% {
+    clip-path: inset(0 0 100% 0);
+    visibility: hidden;
+  }
+}
+
+/* ---------- Asset slot placeholder (only shown if a photo is missing) ---------- */
+
+.asset-slot {
+  background-color: #e6f3fc;
+  background-image:
+    linear-gradient(rgba(2, 132, 199, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(2, 132, 199, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+  box-shadow: inset 0 0 0 1px rgba(2, 132, 199, 0.18);
+}
+
+.asset-slot-focal {
+  position: absolute;
+  width: 18%;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  border: 1.5px solid rgba(2, 132, 199, 0.55);
+  transform: translate(-50%, -50%);
+}
+
+/* ---------- Reduced motion: no preloader, no pinned stages ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --intro-delay: 0s;
+  }
+
+  .preloader {
+    display: none;
+  }
+
+  .motion-reset,
+  .motion-reset * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .motion-reset {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+
+  .motion-reset-hide {
+    display: none !important;
+  }
+}
+
+/* ---------- Location pages: floating bubbles and soft morphing blobs ---------- */
+
+.bubble {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 30% 28%,
+    rgb(255 255 255 / 0.95) 0,
+    rgb(186 230 253 / 0.55) 36%,
+    rgb(2 132 199 / 0.16) 68%,
+    rgb(2 132 199 / 0.06) 100%
+  );
+  box-shadow:
+    inset 0 0 18px rgb(255 255 255 / 0.65),
+    inset -6px -8px 18px rgb(2 132 199 / 0.1),
+    0 10px 34px rgb(2 132 199 / 0.1);
+  animation: bubble-float var(--dur, 14s) ease-in-out var(--delay, 0s) infinite alternate;
+  will-change: transform;
+}
+
+.bubble-dark {
+  background: radial-gradient(
+    circle at 30% 28%,
+    rgb(255 255 255 / 0.5) 0,
+    rgb(125 211 252 / 0.22) 38%,
+    rgb(14 165 233 / 0.1) 70%,
+    rgb(14 165 233 / 0.04) 100%
+  );
+  box-shadow:
+    inset 0 0 18px rgb(255 255 255 / 0.25),
+    0 10px 34px rgb(0 0 0 / 0.2);
+}
+
+.blob {
+  position: absolute;
+  pointer-events: none;
+  filter: blur(46px);
+  opacity: 0.55;
+  background: radial-gradient(circle at 35% 35%, #7dd3fc, #0ea5e9 55%, transparent 72%);
+  animation: blob-morph var(--dur, 22s) ease-in-out var(--delay, 0s) infinite alternate;
+  will-change: transform, border-radius;
+}
+
+.chip-bob {
+  animation: chip-bob var(--dur, 6s) ease-in-out var(--delay, 0s) infinite alternate;
+}
+
+@keyframes bubble-float {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(var(--dx, 14px), var(--dy, -34px), 0) scale(1.07);
+  }
+}
+
+@keyframes blob-morph {
+  0% {
+    border-radius: 42% 58% 63% 37% / 45% 40% 60% 55%;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  100% {
+    border-radius: 60% 40% 38% 62% / 58% 62% 38% 42%;
+    transform: translate3d(var(--dx, 40px), var(--dy, 30px), 0) rotate(24deg) scale(1.12);
+  }
+}
+
+@keyframes chip-bob {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+/* Looping photo reel under the hero. Two identical lists, so -50% is a seamless loop. */
+.reel-track {
+  animation: reel-scroll 48s linear infinite;
+}
+
+.reel-mask:hover .reel-track {
+  animation-play-state: paused;
+}
+
+.reel-mask {
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+@keyframes reel-scroll {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reel-track {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bubble,
+  .blob,
+  .chip-bob {
+    animation: none;
+  }
+}
+
+/* ---------- Hero effects ----------
+   Animated only for a desktop-class viewport with no reduced-motion preference,
+   so phones keep the same artwork without the cost. */
+
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .fx-aurora {
+    animation: blob-morph var(--dur, 22s) ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  .fx-wave {
+    animation: fx-wave 5s linear infinite;
+  }
+
+  .fx-wave-slow {
+    animation: fx-wave 8s linear infinite reverse;
+  }
+
+  .fx-tumble {
+    animation: fx-spin 11s linear infinite;
+  }
+
+  .fx-bubble {
+    animation: fx-bubble 4.2s ease-in infinite;
+  }
+
+  .fx-pulse {
+    animation: fx-pulse 5s ease-in-out infinite alternate;
+  }
+
+  .fx-float {
+    animation: chip-bob 4.5s ease-in-out infinite alternate;
+  }
+
+  .fx-gradient-text {
+    animation: fx-pan 6s ease-in-out infinite alternate;
+  }
+
+  .fx-ping {
+    animation: fx-ping 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  .fx-shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(14, 165, 233, 0.22) 50%, transparent 70%);
+    transform: translateX(-100%);
+    animation: fx-sheen 4.5s ease-in-out 1.5s infinite;
+  }
+}
+
+@keyframes fx-wave {
+  to {
+    transform: translateX(-200px);
+  }
+}
+
+@keyframes fx-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fx-bubble {
+  0% {
+    transform: translateY(0) scale(0.6);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-190px) scale(1.15);
+    opacity: 0;
+  }
+}
+
+@keyframes fx-pulse {
+  from {
+    transform: scale(0.94);
+    opacity: 0.75;
+  }
+  to {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}
+
+@keyframes fx-pan {
+  to {
+    background-position: 100% 0;
+  }
+}
+
+@keyframes fx-ping {
+  75%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+@keyframes fx-sheen {
+  60%,
+  100% {
+    transform: translateX(100%);
+  }
 }
