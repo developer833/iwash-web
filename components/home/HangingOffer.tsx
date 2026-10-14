@@ -172,7 +172,7 @@ export function HangingOffer() {
       </svg>
 
       {/* Hint */}
-      <p
+      {/* <p
         aria-hidden="true"
         className={`absolute -left-24 top-24 w-36 -rotate-6 whitespace-nowrap text-right font-display text-base font-bold leading-tight text-white/90 transition-opacity duration-500 ${
           touched ? "opacity-0" : "opacity-100"
@@ -180,7 +180,7 @@ export function HangingOffer() {
       >
         Hold &amp; pull
         <span className="mt-1 block text-xl motion-safe:animate-bounce">&darr;</span>
-      </p>
+      </p> */}
 
       {/* The card */}
       <div

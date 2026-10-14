@@ -16,7 +16,7 @@ export function generateStaticParams() {
   return site.areas.map((area) => ({ slug: area.slug }));
 }
 
-export async function generateMetadata({ params }: PageProps<"/areas/[slug]">): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/locations/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const area = site.areas.find((a) => a.slug === slug);
   if (!area) return {};
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: PageProps<"/areas/[slug]">): 
   const description =
     content?.description ??
     `${area.blurb} Laundry and dry cleaning by iWash, collected from and returned to your door in ${area.name}, ${site.city}, ${site.region}.`;
-  const path = `/areas/${area.slug}`;
+  const path = `/locations/${area.slug}`;
   return {
     title,
     description,
@@ -63,14 +63,14 @@ function searchFaqs(name: string) {
 
 const sectionHeading = "display display-sm text-iwash-neutral";
 
-export default async function AreaPage({ params }: PageProps<"/areas/[slug]">) {
+export default async function AreaPage({ params }: PageProps<"/locations/[slug]">) {
   const { slug } = await params;
   const area = site.areas.find((a) => a.slug === slug);
   if (!area) notFound();
   const content = getLocation(slug);
   const others = site.areas.filter((a) => a.slug !== area.slug);
   const faqs = content ? [...content.faqs, ...searchFaqs(area.name)] : [];
-  const pageUrl = `${site.url}/areas/${area.slug}`;
+  const pageUrl = `${site.url}/locations/${area.slug}`;
   const placeName = `${area.name}, ${site.city}, ${site.region}`;
 
   /**
@@ -323,7 +323,7 @@ export default async function AreaPage({ params }: PageProps<"/areas/[slug]">) {
             {others.map((o, i) => (
               <span key={o.slug}>
                 <Link
-                  href={`/areas/${o.slug}`}
+                  href={`/locations/${o.slug}`}
                   className="font-semibold text-iwash-neutral underline-offset-4 hover:underline"
                 >
                   Laundry service in {o.name}

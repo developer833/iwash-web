@@ -77,7 +77,7 @@ export function Footer() {
           <ul className="mt-4 space-y-2.5">
             {site.areas.map((a) => (
               <li key={a.slug}>
-                <Link href={`/areas/${a.slug}`} className={item}>
+                <Link href={`/locations/${a.slug}`} className={item}>
                   Laundry service in {a.name}
                 </Link>
               </li>

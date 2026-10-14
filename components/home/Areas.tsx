@@ -25,7 +25,7 @@ export function Areas() {
           {site.areas.map((area, i) => (
             <RevealItem key={area.slug}>
               <Link
-                href={`/areas/${area.slug}`}
+                href={`/locations/${area.slug}`}
                 className="group flex items-baseline justify-between gap-6 border-b border-iwash-neutral/15 py-5 transition-colors duration-500 hover:text-iwash-primary md:py-7"
               >
                 <span className="flex items-baseline gap-5 md:gap-10">
