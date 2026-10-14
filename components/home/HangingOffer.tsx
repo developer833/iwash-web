@@ -193,7 +193,7 @@ export function HangingOffer() {
         onPointerUp={(e) => endPress(e)}
         onPointerCancel={(e) => endPress(e, true)}
         onKeyDown={onKeyDown}
-        className={`pointer-events-auto absolute left-0 top-0 select-none outline-none [touch-action:none] focus-visible:drop-shadow-[0_0_0_#fff] ${
+        className={`pointer-events-auto absolute left-0 top-0 select-none outline-none touch-none focus-visible:drop-shadow-[0_0_0_#fff] ${
           grabbing ? "cursor-grabbing" : "cursor-grab"
         }`}
         style={{
@@ -214,7 +214,7 @@ export function HangingOffer() {
         />
         {/* White house, inset */}
         <div
-          className="absolute inset-[7px] overflow-hidden"
+          className="absolute inset-1.75 overflow-hidden"
           style={{ clipPath: HOUSE, background: "linear-gradient(180deg,#ffffff 0%,#f0f9ff 100%)" }}
         >
           {/* Roof band */}
@@ -234,7 +234,7 @@ export function HangingOffer() {
             <span className="rounded-full bg-iwash-primary px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.16em] text-white">
               New customers
             </span>
-            <p className="mt-1 bg-linear-to-b from-[#0ea5e9] to-[#075985] bg-clip-text font-display text-[3.6rem] font-extrabold leading-[0.95] tracking-tight text-transparent">
+            <p className="mt-1 bg-linear-to-b from-iwash-secondary to-[#075985] bg-clip-text font-display text-[3.6rem] font-extrabold leading-[0.95] tracking-tight text-transparent">
               50%
             </p>
             <p className="-mt-0.5 text-center font-display text-[11px] font-extrabold uppercase leading-tight tracking-[0.14em] text-iwash-neutral">
@@ -249,7 +249,7 @@ export function HangingOffer() {
         {/* The knot where the string ties on */}
         <span
           aria-hidden="true"
-          className="absolute left-1/2 top-[7px] h-3 w-3 -translate-x-1/2 rounded-full bg-white shadow-[inset_0_0_0_2.5px_#0c4a6e]"
+          className="absolute left-1/2 top-1.75 h-3 w-3 -translate-x-1/2 rounded-full bg-white shadow-[inset_0_0_0_2.5px_#0c4a6e]"
         />
       </div>
     </div>

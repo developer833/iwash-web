@@ -39,7 +39,6 @@ export const metadata: Metadata = {
   },
 };
 
-/** One site-wide business entity. Only verified facts; hours appear once site.hours is filled in; no ratings or reviews. */
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "DryCleaningOrLaundry",
