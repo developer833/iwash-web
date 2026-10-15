@@ -1,7 +1,5 @@
 import { site } from "@/lib/site";
 
-export const dynamic = "force-static";
-
 export function GET() {
   const { address, contact, app } = site;
   const lines = [
