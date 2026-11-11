@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: { default: title, template: `%s | ${site.name}` },
   description: site.description,
   alternates: { canonical: "/" },
+  verification: {
+    google: "C4AyzEYpUeCaZ0z9pvjdWnRq4ArgioyqumEFvWGYIDI",
+  },
   openGraph: {
     type: "website",
     siteName: site.name,
