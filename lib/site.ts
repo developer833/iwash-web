@@ -111,6 +111,7 @@ export const site = {
   /** Extra footer links: real destinations that help crawlers and visitors find the key pages. */
   footerLinks: [
     { href: "/#how-it-works", label: "How it works" },
+    { href: "/laundry-service-kochi", label: "Laundry service in Kochi" },
     { href: "/prices", label: "Affordable prices" },
     { href: "/#faq", label: "FAQ" },
     { href: "/download", label: "Schedule a pickup" },

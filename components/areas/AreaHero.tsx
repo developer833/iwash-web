@@ -3,7 +3,7 @@
 import { useRef, type CSSProperties, type ReactNode } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "motion/react";
-import { photos } from "@/lib/assets";
+import type { AreaImages } from "@/lib/locationImages";
 import { easeOut } from "@/lib/motion";
 import { Bubbles } from "@/components/areas/Bubbles";
 import { AssetSlot } from "@/components/ui/AssetSlot";
@@ -16,6 +16,8 @@ type Props = {
   placeChip: string;
   /** Pill under the collage. */
   factChip: string;
+  /** Large photo (4:3) and small overlapping photo (4:5) of the collage. */
+  images: Pick<AreaImages, "hero" | "accent">;
   children: ReactNode;
 };
 
@@ -29,7 +31,7 @@ const rise = (delay: number) => ({
  * Location page hero: copy on the left, a layered photo collage on the right,
  * drifting bubbles behind. The collage parallaxes gently with scroll.
  */
-export function AreaHero({ crumbs, eyebrow, title, placeChip, factChip, children }: Props) {
+export function AreaHero({ crumbs, eyebrow, title, placeChip, factChip, images, children }: Props) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const mainY = useTransform(scrollYProgress, [0, 1], [0, 60]);
@@ -84,7 +86,7 @@ export function AreaHero({ crumbs, eyebrow, title, placeChip, factChip, children
             style={{ y: mainY }}
             className="relative aspect-[4/3] overflow-hidden rounded-[28px] shadow-[0_30px_80px_-30px_rgba(2,132,199,0.55)] ring-1 ring-iwash-neutral/10"
           >
-            <AssetSlot photo={photos.facility} fill sizes="(min-width: 768px) 45vw, 92vw" />
+            <AssetSlot photo={images.hero} fill sizes="(min-width: 768px) 45vw, 92vw" />
           </motion.div>
 
           <motion.div
@@ -95,7 +97,7 @@ export function AreaHero({ crumbs, eyebrow, title, placeChip, factChip, children
             className="absolute -bottom-8 -left-3 w-[40%] md:-left-10"
           >
             <div className="relative aspect-[4/5] overflow-hidden rounded-[22px] border-4 border-white shadow-[0_24px_60px_-24px_rgba(15,23,42,0.5)]">
-              <AssetSlot photo={photos.delivery} fill sizes="(min-width: 768px) 20vw, 40vw" decorative />
+              <AssetSlot photo={images.accent} fill sizes="(min-width: 768px) 20vw, 40vw" decorative />
             </div>
           </motion.div>
 

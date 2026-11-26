@@ -49,11 +49,61 @@ export const photos = {
   delivery: {
     id: "06",
     src: "/doorstep-delivery.webp",
-    alt: "A blue iWash Laundry bag waiting on a doorstep in front of a white front door.",
+    alt: "An iWash team member in a blue cap handing a white iWash laundry bag to a smiling customer at her front door.",
     focal: "72% 78%",
-    ratio: 1,
+    ratio: 2 / 3,
     brief:
       "Landscape 3:2. A packed iWash bag placed on a doorstep, front door slightly open, warm evening light.",
+  },
+
+  // Extra photography so every location page can have its own set (see lib/locationImages.ts).
+  pickupVan: {
+    id: "07",
+    src: "/pickup-van.jpg",
+    alt: "An iWash van parked on a quiet residential street while a team member carries a laundry bag to a front door.",
+    focal: "50% 50%",
+    ratio: 1519 / 1035,
+    brief: "Existing asset.",
+  },
+  doorstepBag: {
+    id: "08",
+    src: "/delivery.jpg",
+    alt: "A white drawstring laundry bag waiting on a doorstep beside an open front door in warm evening light.",
+    focal: "50% 50%",
+    ratio: 1518 / 1036,
+    brief: "Existing asset.",
+  },
+  packing: {
+    id: "09",
+    src: "/packaging-cart.jpg",
+    alt: "A team member packing freshly folded shirts into a white drawstring laundry bag.",
+    focal: "50% 50%",
+    ratio: 1518 / 1036,
+    brief: "Existing asset.",
+  },
+  steamPress: {
+    id: "10",
+    src: "/finishing-folded.jpg",
+    alt: "Steam rising as a white shirt is pressed, with a stack of folded shirts behind it.",
+    focal: "50% 50%",
+    ratio: 1518 / 1036,
+    brief: "Existing asset.",
+  },
+  foldedStack: {
+    id: "11",
+    src: "/folded.png",
+    alt: "A neat stack of folded, pressed shirts held in two hands.",
+    focal: "50% 50%",
+    ratio: 1920 / 826,
+    brief: "Existing asset.",
+  },
+  foldingTowels: {
+    id: "12",
+    src: "/wash.webp",
+    alt: "An iWash team member folding fresh towels in the laundry while a colleague loads a washing machine behind her.",
+    focal: "50% 50%",
+    ratio: 2 / 3,
+    brief: "Existing asset.",
   },
 } satisfies Record<string, Photo>;
 

@@ -12,6 +12,7 @@ export function GET() {
     "## Pages",
     "",
     `- [Home](${site.url}/): Services, how it works, service areas and FAQ`,
+    `- [Laundry service in Kochi](${site.url}/laundry-service-kochi): Pickup and delivery across Kochi for laundry, ironing and dry cleaning`,
     `- [Prices](${site.url}/prices): Current price list per item, GST included`,
     `- [Get the app](${site.url}/download): Download the app and schedule a pickup`,
     "",

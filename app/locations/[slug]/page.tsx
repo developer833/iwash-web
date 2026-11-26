@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { site } from "@/lib/site";
 import { getLocation } from "@/lib/locations";
-import { photos } from "@/lib/assets";
+import { getAreaImages } from "@/lib/locationImages";
 import { ButtonLink } from "@/components/ui/Button";
 import { StoreBadges } from "@/components/ui/StoreBadges";
 import { ParallaxImage } from "@/components/motion/ParallaxImage";
@@ -26,6 +26,7 @@ export async function generateMetadata({ params }: PageProps<"/locations/[slug]"
     content?.description ??
     `${area.blurb} Laundry and dry cleaning by iWash, collected from and returned to your door in ${area.name}, ${site.city}, ${site.region}.`;
   const path = `/locations/${area.slug}`;
+  const { hero } = getAreaImages(slug);
   return {
     title,
     description,
@@ -36,7 +37,7 @@ export async function generateMetadata({ params }: PageProps<"/locations/[slug]"
       description,
       url: path,
       locale: "en_IN",
-      images: [{ url: photos.facility.src ?? site.logo.src, alt: photos.facility.alt }],
+      images: [{ url: hero.src ?? site.logo.src, alt: hero.alt }],
     },
     twitter: { card: "summary_large_image", title: `${title} | ${site.name}`, description },
   };
@@ -68,6 +69,7 @@ export default async function AreaPage({ params }: PageProps<"/locations/[slug]"
   const area = site.areas.find((a) => a.slug === slug);
   if (!area) notFound();
   const content = getLocation(slug);
+  const images = getAreaImages(slug);
   const others = site.areas.filter((a) => a.slug !== area.slug);
   const faqs = content ? [...content.faqs, ...searchFaqs(area.name)] : [];
   const pageUrl = `${site.url}/locations/${area.slug}`;
@@ -144,6 +146,7 @@ export default async function AreaPage({ params }: PageProps<"/locations/[slug]"
         title={content?.heading ?? `Laundry pickup and delivery in ${area.name}`}
         placeChip={`Collecting in ${area.name}`}
         factChip="Priced per item · GST included"
+        images={images}
       >
         <p>{content?.intro ?? area.blurb}</p>
         {!content ? (
@@ -179,7 +182,7 @@ export default async function AreaPage({ params }: PageProps<"/locations/[slug]"
         {content ? (
           <section aria-labelledby="area-experience" className="grid gap-10 md:grid-cols-2 md:items-center md:gap-16">
             <ParallaxImage
-              photo={photos.finishing}
+              photo={images.experience}
               aspect="aspect-[3/2]"
               sizes="(min-width: 768px) 50vw, 92vw"
             />
